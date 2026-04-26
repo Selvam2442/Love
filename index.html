@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Chello ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Disable text selection everywhere except input fields */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #fff0f5; 
+            color: #333; 
+            overflow-x: hidden; 
+            -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+        }
+
+        /* Allow typing in input fields */
+        input {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
+        }
+
+        /* Disable image dragging globally */
+        img {
+            -webkit-user-drag: none;
+            pointer-events: none; /* Prevents long-press save on mobile */
+        }
+
+        /* Loading Screen */
+        #wait-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffb6c1; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; font-size: 2.5rem; font-weight: bold; color: #fff;
+        }
+
+        /* Name Check Section */
+        #name-check-section {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 20px;
+        }
+        .input-box {
+            padding: 15px; border-radius: 25px; border: 2px solid #ff1493;
+            width: 80%; max-width: 300px; font-size: 1.1rem; margin-top: 20px; outline: none;
+            pointer-events: auto; /* Ensure inputs are clickable */
+        }
+        .btn {
+            background: #ff1493; color: #fff; border: none; padding: 12px 30px;
+            border-radius: 25px; margin-top: 20px; cursor: pointer; font-weight: bold; font-size: 1rem;
+        }
+        #name-hint { color: #d10056; margin-top: 15px; font-weight: 600; min-height: 24px; font-size: 1rem; }
+
+        /* Main Content (Hidden Initially) */
+        #main-content { display: none; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; background: linear-gradient(to bottom, #ffb6c1, #fff0f5);
+            padding: 20px;
+        }
+        .profile-img {
+            width: 220px; height: 220px; border-radius: 50%; border: 6px solid #fff;
+            overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .profile-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; } 
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.8rem; color: #d10056; line-height: 1.1; }
+
+        /* Wishes/Intro Section */
+        .wishes-intro {
+            padding: 60px 20px; background-color: #fff; text-align: center;
+        }
+        .wishes-intro p {
+            font-size: 1.3rem; max-width: 700px; margin: 0 auto 20px; color: #555; line-height: 1.7;
+        }
+
+        /* Timeline Section */
+        .timeline { padding: 50px 20px; max-width: 850px; margin: auto; }
+        .timeline-item { background: #fff; padding: 25px; border-radius: 15px; margin-bottom: 35px; box-shadow: 0 5px 18px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center;}
+        .timeline-item h3 { color: #ff1493; margin-bottom: 12px; font-size: 1.6rem; width: 100%; text-align: center;}
+        .timeline-item p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; width: 100%; text-align: center; color: #666; }
+        
+        .timeline-img-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .timeline-img {
+            max-width: 100%;
+            height: 450px; 
+            object-fit: contain; 
+            background-color: #f9f9f9; 
+            display: block;
+        }
+
+        /* Quiz Section */
+        .quiz-section { background: #fff; padding: 70px 20px; text-align: center; }
+        .quiz-container { max-width: 500px; margin: auto; text-align: left; }
+        .quiz-item { margin-bottom: 28px; }
+        .quiz-item label { display: block; font-weight: 600; margin-bottom: 10px; color: #d10056; font-size: 1.1rem; }
+        .quiz-input { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid #ffb6c1; font-size: 1rem; outline: none; transition: border-color 0.3s; pointer-events: auto; }
+        .quiz-input:focus { border-color: #ff1493; }
+        #quiz-msg { color: #d10056; margin-top: 20px; font-weight: bold; text-align: center; font-size: 1.2rem; min-height: 1.5em; }
+
+        /* Video Section */
+        #video-section { display: none; margin-top: 40px; text-align: center; }
+        #bday-video { width: 100%; max-width: 650px; border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); pointer-events: auto; } /* Video needs pointer events for controls */
+        
+        /* Footer */
+        footer {
+            text-align: center; padding: 40px; background-color: #ffb6c1; color: #fff; font-weight: 600; font-size: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.8rem; }
+            .timeline-img { height: 350px; } 
+            .profile-img { width: 180px; height: 180px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;"> <div id="wait-screen">wait pannu 🫸</div>
+
+    <section id="name-check-section">
+        <h2 id="name-ques" style="color: #ff1493;">un name enna? 👀</h2>
+        <input type="text" id="name-input" class="input-box" placeholder="Inga type pannu..." autocomplete="off">
+        <p id="name-hint"></p>
+        <button class="btn" onclick="checkName()">Next</button>
+    </section>
+
+    <div id="main-content">
+        <section class="hero">
+            <div class="profile-img">
+                <img src="she.jpg" alt="Yamunaa">
+            </div>
+            <h1>Happy 18th Birthday <br> Arul Dencilla!</h1>
+        </section>
+
+        <section class="wishes-intro">
+            <p>"En ulagam, en ellame nee than di... ❤️"</p>
+            <p style="font-size: 1.1rem; color: #777;">Scroll down di loosu! 😁📸</p>
+        </section>
+
+        <section class="timeline">
+            <h2 style="text-align:center; font-family:'Dancing Script'; font-size: 3rem; color:#d10056; margin-bottom: 40px;">Namma Moments 📸</h2>
+            
+            <div class="timeline-item">
+                <h3>8th Nov 2025 - Love Started</h3>
+                <p>Namma love start aana antha alagana naal di. Life full-ah mariduchi!</p>
+                <div class="timeline-img-container">
+                    <img src="Start.png" class="timeline-img" alt="Love Start">
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>25th Dec 2025 - First Date</h3>
+                <p>Vijitha veetla celebrate panna antha Christmas date eppovum special.</p>
+                <div class="timeline-img-container">
+                    <img src="Meet.jpg" class="timeline-img" alt="First Date">
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>16th Jan 2026 - First Cinema & Kiss</h3>
+                <p>Parasakthi movie-nu poitu, namma kiss pannitu vanthome! 😍</p>
+                <div class="timeline-img-container">
+                    <img src="Theatre.jpg" class="timeline-img" alt="First Cinema">
+                </div>
+            </div>
+        </section>
+
+        <section class="quiz-section">
+            <h2 style="color: #ff1493; margin-bottom: 30px; font-size: 2rem;">attend the quez to get your video 😁</h2>
+            <div class="quiz-container">
+                <div class="quiz-item">
+                    <label>1) eppo love start achi 👀 (Date select pannu)</label>
+                    <input type="date" id="q1" class="quiz-input" required>
+                </div>
+                <div class="quiz-item">
+                    <label>2) eppo first movie ku ponom 👀</label>
+                    <input type="date" id="q2" class="quiz-input" required>
+                </div>
+                <div class="quiz-item">
+                    <label>3) enna movie ponom? 👀</label>
+                    <input type="text" id="q3" class="quiz-input" placeholder="Parasakthi, Leo..." required autocomplete="off">
+                </div>
+                <div class="quiz-item">
+                    <label>4) eppo fisrt kiss pannom? 👀</label>
+                    <input type="date" id="q4" class="quiz-input" required>
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="checkQuiz()">Submit</button>
+                
+                <p id="quiz-msg"></p>
+
+                <div id="video-section">
+                    <h3 style="margin-bottom: 18px; color: #ff1493;">Intha unakaga edit panna special video! ❤️</h3>
+                    <video id="bday-video" controls controlsList="nodownload">
+                        <source src="Video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Made with endless love by Yours Truly ❤️
+        </footer>
+    </div>
+
+    <script>
+        // --- SECURITY SCRIPTS ---
+
+        // 1. Disable Right Click (Context Menu)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Disable Dragging globally via JS (backup to CSS and inline HTML)
+        document.addEventListener('dragstart', event => event.preventDefault());
+
+        // 3. Disable specific Keyboard Shortcuts (F12, Ctrl+U, Ctrl+Shift+I/J/C, Ctrl+S, Ctrl+P)
+        document.addEventListener('keydown', function(e) {
+            // F12 key
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+            }
+            // Ctrl + Shift + I / J / C
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+                e.preventDefault();
+            }
+            // Ctrl + U (View Source)
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                e.preventDefault();
+            }
+            // Ctrl + S (Save Page)
+            if (e.ctrlKey && (e.key === 'S' || e.key === 's')) {
+                e.preventDefault();
+            }
+            // Ctrl + P (Print Page)
+            if (e.ctrlKey && (e.key === 'P' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+
+        // --- WEBSITE LOGIC SCRIPTS ---
+
+        setTimeout(() => {
+            document.getElementById('wait-screen').style.display = 'none';
+        }, 3000);
+
+        function checkName() {
+            let val = document.getElementById('name-input').value.toLowerCase().trim();
+            let hint = document.getElementById('name-hint');
+            let ques = document.getElementById('name-ques');
+
+            if (val === "") {
+                hint.innerText = "Type pannu di first! 🙄";
+                return;
+            }
+
+            if (val === "dencilla") {
+                ques.innerText = "un name enna? 👀"; 
+                hint.innerText = "itha kekala, na unakku vachirukura nickname enna nu keten 👀";
+            } else if (val === "yamuna") {
+                hint.innerText = "innoru 'a' yaro potuva 😤";
+            } else if (val === "yamunaa") {
+                document.getElementById('name-check-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                window.scrollTo(0, 0); 
+            } else {
+                hint.innerText = "Correct-ah type pannu di! 🙄";
+            }
+        }
+
+        function checkQuiz() {
+            let q1 = document.getElementById('q1').value; 
+            let q2 = document.getElementById('q2').value; 
+            let q3 = document.getElementById('q3').value.toLowerCase().trim(); 
+            let q4 = document.getElementById('q4').value; 
+
+            let msg = document.getElementById('quiz-msg');
+
+            if (q1 === "2025-11-08" && q2 === "2026-01-16" && q3 === "parasakthi" && q4 === "2026-01-16") {
+                msg.innerText = "Super di! Correct-ah sollita 😍";
+                msg.style.color = "green";
+                document.getElementById('video-section').style.display = 'block';
+                document.getElementById('bday-video').play();
+            } else {
+                msg.innerText = "Ada loosu, seri vitu, innoru chance tharen 😁";
+                msg.style.color = "#d10056";
+            }
+        }
+    </script>
+</body>
+</html>
