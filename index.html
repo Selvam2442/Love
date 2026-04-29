@@ -145,7 +145,7 @@
             <div class="profile-img">
                 <img src="she.jpg" alt="Yamunaa">
             </div>
-            <h1>Happy 18th Birthday <br> Arul Dencilla!</h1>
+            <h1>Happy 18th Birthday <br> Denci Kutty ma</h1>
         </section>
 
         <section class="wishes-intro">
@@ -189,17 +189,17 @@
                     <input type="date" id="q1" class="quiz-input" required>
                 </div>
                 <div class="quiz-item">
-                    <label>2) eppo first movie ku ponom 👀</label>
+                    <label>2) eppo first movie ku ponom & Kiss 👀</label>
                     <input type="date" id="q2" class="quiz-input" required>
                 </div>
                 <div class="quiz-item">
                     <label>3) enna movie ponom? 👀</label>
                     <input type="text" id="q3" class="quiz-input" placeholder="Parasakthi, Leo..." required autocomplete="off">
                 </div>
-                <div class="quiz-item">
+                <!-- <div class="quiz-item">
                     <label>4) eppo fisrt kiss pannom? 👀</label>
                     <input type="date" id="q4" class="quiz-input" required>
-                </div>
+                </div> -->
                 <button class="btn" style="width: 100%; margin-top: 10px;" onclick="checkQuiz()">Submit</button>
                 
                 <p id="quiz-msg"></p>
@@ -215,7 +215,7 @@
         </section>
 
         <footer>
-            Made with endless love by Yours Truly ❤️
+            I am always yours 👀
         </footer>
     </div>
 
@@ -286,11 +286,10 @@
             let q1 = document.getElementById('q1').value; 
             let q2 = document.getElementById('q2').value; 
             let q3 = document.getElementById('q3').value.toLowerCase().trim(); 
-            let q4 = document.getElementById('q4').value; 
 
             let msg = document.getElementById('quiz-msg');
 
-            if (q1 === "2025-11-08" && q2 === "2026-01-16" && q3 === "parasakthi" && q4 === "2026-01-16") {
+            if (q1 === "2025-11-08" && q2 === "2026-01-16" && q3 === "parasakthi") {
                 msg.innerText = "Super di! Correct-ah sollita 😍";
                 msg.style.color = "green";
                 document.getElementById('video-section').style.display = 'block';
