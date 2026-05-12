@@ -174,7 +174,7 @@
 
         /* Video Section */
         #video-section { display: none; margin-top: 40px; text-align: center; }
-        #bday-video { width: 100%; max-width: 650px; border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); pointer-events: auto; } /* Video needs pointer events for controls */
+        #bday-video { width: 100%; max-width: 650px; border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); pointer-events: auto; } 
         
         /* Footer */
         footer {
@@ -198,13 +198,12 @@
             <p>Access Denied. Identity not verified.</p>
         </div>
         
-        <!-- This empty div creates the massive scroll length -->
         <div class="scroll-spacer"></div>
         
         <button class="secret-btn" onclick="revealSite()">nan than</button>
     </section>
 
-    <!-- Name Check Section (Initially Hidden) -->
+    <!-- Name Check Section -->
     <section id="name-check-section">
         <h2 id="name-ques" style="color: #ff1493;">un name enna? 👀</h2>
         <input type="text" id="name-input" class="input-box" placeholder="Inga type pannu..." autocomplete="off">
@@ -252,23 +251,48 @@
                     <img src="Theatre.jpg" class="timeline-img" alt="First Cinema">
                 </div>
             </div>
+
+            <div class="timeline-item">
+                <h3>7th Mar 2026 - First Ride Together</h3>
+                <p>Semaputhur la irunthu college varaikum namma first ride... kai pudichikitte ponathu eppovum marakkathu di! 👩‍❤️‍👨</p>
+                <div class="timeline-img-container">
+                    <img src="FirstRide.jpg" class="timeline-img" alt="First Ride">
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>30th Apr 2026 - Second Ride</h3>
+                <p>College la irunthu Kovilpatti ku namma second ride. Intha madhiri un kooda life long travel pannanum! ❤️🏍️</p>
+                <div class="timeline-img-container">
+                    <img src="SecondRide.jpg" class="timeline-img" alt="Second Ride">
+                </div>
+            </div>
         </section>
 
         <section class="quiz-section">
-            <h2 style="color: #ff1493; margin-bottom: 30px; font-size: 2rem;">attend the quez to get your video 😁</h2>
+            <h2 style="color: #ff1493; margin-bottom: 30px; font-size: 2rem;">attend the quiz to get your video 😁</h2>
             <div class="quiz-container">
                 <div class="quiz-item">
                     <label>1) eppo love start achi 👀 (Date select pannu)</label>
                     <input type="date" id="q1" class="quiz-input" required>
                 </div>
                 <div class="quiz-item">
-                    <label>2) eppo first movie ku ponom & Kiss 👀</label>
+                    <label>2) namma first meet eppo? 👀</label>
                     <input type="date" id="q2" class="quiz-input" required>
                 </div>
                 <div class="quiz-item">
-                    <label>3) enna movie ponom? 👀</label>
-                    <input type="text" id="q3" class="quiz-input" placeholder="Parasakthi, Leo..." required autocomplete="off">
+                    <label>3) theatre eppo ponom? 👀</label>
+                    <input type="date" id="q3" class="quiz-input" required>
                 </div>
+                <div class="quiz-item">
+                    <label>4) namma first ride eppo ponam? 👀</label>
+                    <input type="date" id="q4" class="quiz-input" required>
+                </div>
+                <div class="quiz-item">
+                    <label>5) second ride (Kovilpatti) eppo ponam? 👀</label>
+                    <input type="date" id="q5" class="quiz-input" required>
+                </div>
+                
                 <button class="btn" style="width: 100%; margin-top: 10px;" onclick="checkQuiz()">Submit</button>
                 
                 <p id="quiz-msg"></p>
@@ -302,16 +326,10 @@
         });
 
         // --- WEBSITE LOGIC SCRIPTS ---
-
-        // Called when the "nan than" button is clicked after scrolling
         function revealSite() {
-            // Hide the QR Screen
             document.getElementById('qr-screen').style.display = 'none';
-            // Change body background back to the pink theme
             document.body.classList.add('ready');
-            // Show the name check section
             document.getElementById('name-check-section').style.display = 'flex';
-            // Scroll back to the top automatically
             window.scrollTo(0, 0);
         }
 
@@ -342,17 +360,21 @@
         function checkQuiz() {
             let q1 = document.getElementById('q1').value; 
             let q2 = document.getElementById('q2').value; 
-            let q3 = document.getElementById('q3').value.toLowerCase().trim(); 
+            let q3 = document.getElementById('q3').value; 
+            let q4 = document.getElementById('q4').value; 
+            let q5 = document.getElementById('q5').value; 
 
             let msg = document.getElementById('quiz-msg');
 
-            if (q1 === "2025-11-08" && q2 === "2026-01-16" && q3 === "parasakthi") {
+            // Dates checked chronologically based on your timeline
+            // q1: Nov 8, 2025 | q2: Dec 25, 2025 | q3: Jan 16, 2026 | q4: Mar 7, 2026 | q5: Apr 30, 2026
+            if (q1 === "2025-11-08" && q2 === "2025-12-25" && q3 === "2026-01-16" && q4 === "2026-03-07" && q5 === "2026-04-30") {
                 msg.innerText = "Super di! Correct-ah sollita 😍";
                 msg.style.color = "green";
                 document.getElementById('video-section').style.display = 'block';
                 document.getElementById('bday-video').play();
             } else {
-                msg.innerText = "Ada loosu, seri vitu, innoru chance tharen 😁";
+                msg.innerText = "Ada loosu, thappu thappa solra, innoru chance tharen correct ah yosichu podu 😁";
                 msg.style.color = "#d10056";
             }
         }
